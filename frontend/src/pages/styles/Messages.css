@@ -1,0 +1,117 @@
+/* 消息中心页面响应式优化 */
+.messages-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.messages-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.message-item {
+  padding: 16px 24px !important;
+  transition: background-color 0.3s ease;
+}
+
+.message-item:hover {
+  background-color: #f6ffed;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 16px; /* 防止标题和时间贴太紧 */
+}
+
+.message-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin: 0 !important;
+  flex: 1; /* 让标题占据剩余空间 */
+  word-break: break-word; /* 允许长单词换行 */
+}
+
+.message-time {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap; /* 确保时间不换行 */
+  flex-shrink: 0; /* 确保时间不被挤压 */
+}
+
+.message-content {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* 消息中心全部已读按钮样式 */
+.mark-all-read-btn {
+  background-color: #f6ffed !important;
+  color: #52c41a !important;
+  border: 2px solid #b7eb8f !important;
+  border-radius: 20px !important;
+  font-weight: 600;
+  box-shadow: 0 4px 0 #b7eb8f !important;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 20px;
+}
+
+.mark-all-read-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #95de64 !important;
+  border-color: #95de64 !important;
+  color: #389e0d !important;
+  background-color: #fff !important;
+}
+
+.mark-all-read-btn:active {
+  transform: translateY(2px) !important;
+  box-shadow: 0 2px 0 #b7eb8f !important;
+}
+
+@media (max-width: 768px) {
+  .messages-container {
+    padding: 12px; /* 移动端增加左右内边距，减小上下内边距 */
+  }
+
+  .message-item {
+    padding: 12px 16px !important; /* 减小列表项内边距 */
+  }
+
+  .message-header {
+    flex-direction: column; /* 移动端标题和时间上下排列 */
+    gap: 4px;
+  }
+  
+  .message-time {
+    font-size: 11px;
+    align-self: flex-start; /* 左对齐 */
+  }
+
+  /* 调整卡片头部的标题和按钮 */
+  .messages-card .ant-card-head-wrapper {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 0;
+  }
+  
+  .messages-card .ant-card-head-title {
+    padding: 0;
+    flex: 1 1 100%; /* 独占一行 */
+  }
+  
+  .messages-card .ant-card-extra {
+    padding: 0;
+    margin-left: auto; /* 按钮靠右 */
+  }
+}

@@ -1,0 +1,163 @@
+/* 后台管理页面响应式 */
+.admin-container {
+  padding: 24px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(82, 196, 26, 0.05);
+  border: 2px solid #b7eb8f;
+  min-height: calc(100vh - 120px); /* 让卡片至少占满整个屏幕剩余高度 */
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-container .ant-tabs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-container .ant-tabs-content-holder {
+  flex: 1;
+}
+
+.admin-container .ant-tabs-content {
+  height: 100%;
+}
+
+.admin-container .ant-tabs-tabpane-active {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+
+.admin-container .ant-table-wrapper {
+  flex: 1;
+}
+
+.admin-header-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  align-items: center;
+}
+
+.admin-add-btn {
+  height: 40px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.admin-header-actions.end {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+  
+  .admin-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-header-actions.end {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .admin-header-actions .custom-search {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .admin-header-actions .ant-btn {
+    width: 100%;
+  }
+
+  /* Adjust table rendering for mobile (prevent horizontal scroll) */
+  .admin-container .ant-table-wrapper {
+    overflow-x: hidden !important;
+    width: 100%;
+  }
+  
+  .admin-container .ant-table {
+    font-size: 12px; /* Smaller text */
+    table-layout: fixed !important; /* Force table to fit container width */
+    width: 100% !important;
+  }
+  
+  .admin-container .ant-table-cell {
+    padding: 8px 4px !important; /* Reduce padding */
+    white-space: normal; /* allow wrap if really needed */
+    word-break: break-all;
+  }
+  
+  /* Allow title to wrap if it's too long, but keep it inline */
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-tbody > tr > td:nth-child(3) {
+    white-space: normal;
+    min-width: 0;
+    word-break: break-word;
+  }
+  
+  /* Force Price column header and content to never wrap */
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-thead > tr > th:nth-child(4),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-tbody > tr > td:nth-child(4) {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    width: 60px; /* Give it enough fixed width */
+  }
+  
+  /* Fix sorter icons taking too much space and causing vertical text */
+  .admin-container .ant-table-column-sorters {
+    display: flex;
+    flex-wrap: nowrap !important; /* Force 'Price' and arrows on same line */
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .admin-container .ant-table-column-title {
+    flex: 0 0 auto; /* Prevent title from shrinking */
+  }
+  
+  /* Hide less important columns on mobile */
+  /* Hide specific columns based on index to save space, but scoped better */
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-thead > tr > th:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-tbody > tr > td:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-thead > tr > th:nth-child(5),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-tbody > tr > td:nth-child(5),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-thead > tr > th:nth-child(6),
+  .admin-container .ant-tabs-tabpane:nth-child(1) .ant-table-tbody > tr > td:nth-child(6) {
+    display: none !important;
+  }
+  
+  /* User Table: Hide ID and Name on mobile, keep avatar */
+  .admin-container .ant-tabs-tabpane:nth-child(2) .ant-table-thead > tr > th:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(2) .ant-table-tbody > tr > td:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(2) .ant-table-thead > tr > th:nth-child(4), /* Hide Name (Nickname) */
+  .admin-container .ant-tabs-tabpane:nth-child(2) .ant-table-tbody > tr > td:nth-child(4) {
+    display: none !important;
+  }
+  
+  /* Category Table: Hide ID and Value on mobile */
+  .admin-container .ant-tabs-tabpane:nth-child(3) .ant-table-thead > tr > th:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(3) .ant-table-tbody > tr > td:nth-child(1),
+  .admin-container .ant-tabs-tabpane:nth-child(3) .ant-table-thead > tr > th:nth-child(3),
+  .admin-container .ant-tabs-tabpane:nth-child(3) .ant-table-tbody > tr > td:nth-child(3) {
+    display: none !important;
+  }
+  
+  /* Action column layout */
+  .admin-container .ant-space {
+    gap: 4px !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .admin-container .ant-space-item a {
+    font-size: 12px;
+  }
+}

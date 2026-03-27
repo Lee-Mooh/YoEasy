@@ -1,0 +1,281 @@
+/* 首页及瀑布流基础样式（PC端网格，移动端双列） */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.waterfall-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+/* 在PC端，我们将 .waterfall-column 视为直接展示卡片，不强制分列 */
+.waterfall-column {
+  display: contents; /* PC端让子元素直接参与网格布局 */
+}
+
+.waterfall-card {
+  border-radius: 20px;
+  overflow: visible !important;
+  border-top: 2px solid #b7eb8f;
+  border-left: 2px solid #b7eb8f;
+  border-right: none;
+  border-bottom: 2px solid #b7eb8f;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  background: #fff;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.waterfall-card::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: -8px;
+  bottom: -8px;
+  background-color: rgba(51, 51, 51, 0.15);
+  border-radius: 20px;
+  z-index: -1;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.waterfall-card:hover {
+  transform: translate(-4px, -4px);
+  border-color: #389e0d;
+  border-width: 3px;
+  border-right-width: 0;
+}
+
+.waterfall-card:hover::after {
+  top: 12px;
+  left: 12px;
+  right: -12px;
+  bottom: -12px;
+  background-color: rgba(82, 196, 26, 0.4);
+}
+
+.waterfall-card .ant-card-cover {
+  border-radius: 17px 17px 0 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+.waterfall-img {
+  height: 140px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.waterfall-card:hover .waterfall-img {
+  transform: scale(1.05);
+}
+
+.waterfall-card .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.product-title {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 22px;
+  line-height: 22px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #333;
+}
+
+.product-price {
+  color: #ff4d4f;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.category-tag {
+  margin: 0;
+  border-radius: 12px;
+  font-weight: 600;
+  transform: scale(0.9);
+  transform-origin: left;
+}
+
+.time-text {
+  font-size: 12px;
+  transform: scale(0.9);
+  transform-origin: left;
+  color: #999;
+}
+
+/* 覆盖卡片底部的边框变化 */
+.waterfall-card:hover .ant-card-actions {
+  border-top-color: #389e0d;
+  border-bottom-color: #389e0d;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+}
+
+/* 首页筛选栏卡通化样式 */
+.filter-container {
+  margin-bottom: 24px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 2px dashed #b7eb8f;
+  box-shadow: 0 4px 16px rgba(82, 196, 26, 0.05);
+  display: flex;
+  justify-content: flex-start;
+  transition: all 0.3s ease;
+}
+
+.filter-container:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #95de64;
+  box-shadow: 0 6px 20px rgba(82, 196, 26, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-space-mobile-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap; /* 允许在空间不够时换行 */
+}
+
+.filter-selects-wrapper {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0; /* 防止下拉框区域被压缩 */
+}
+
+@media (max-width: 768px) {
+  /* 筛选栏响应式 */
+  .filter-container {
+    padding: 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.85); /* 移动端背景稍微不那么透明，保证可读性 */
+  }
+  
+  .filter-space-mobile-wrapper {
+    gap: 12px;
+  }
+
+  .filter-selects-wrapper {
+    gap: 12px;
+  }
+
+  /* 商品卡片响应式 - 瀑布流错落效果 */
+  .waterfall-container {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .waterfall-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    width: calc(50% - 6px);
+  }
+
+  /* 移除之前为了错落感而设置的整个列偏移，保证第一排顶部对齐 */
+  .waterfall-column:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .waterfall-card {
+    border-radius: 12px;
+    height: auto; /* 让卡片高度由内容决定 */
+  }
+
+  .waterfall-card::after {
+    border-radius: 12px;
+    top: 4px;
+    left: 4px;
+    right: -4px;
+    bottom: -4px;
+  }
+
+  .waterfall-card:hover {
+    transform: translate(-2px, -2px);
+    border-width: 2px;
+  }
+
+  .waterfall-card .ant-card-cover {
+    border-radius: 10px 10px 0 0 !important;
+  }
+  
+  /* 移动端强制不同的图片高度来增加错落感，也可以使用随机高度 */
+  .waterfall-column:nth-child(1) .waterfall-card:nth-child(odd) .waterfall-img {
+    height: 160px;
+  }
+  .waterfall-column:nth-child(1) .waterfall-card:nth-child(even) .waterfall-img {
+    height: 120px;
+  }
+  .waterfall-column:nth-child(2) .waterfall-card:nth-child(odd) .waterfall-img {
+    height: 110px;
+  }
+  .waterfall-column:nth-child(2) .waterfall-card:nth-child(even) .waterfall-img {
+    height: 150px;
+  }
+
+  .waterfall-card .ant-card-body {
+    padding: 12px !important;
+  }
+
+  .product-title {
+    font-size: 13px !important;
+  }
+  
+  .product-price {
+    font-size: 14px !important;
+  }
+
+  .waterfall-card .ant-card-actions > li > span {
+    font-size: 14px;
+  }
+
+  /* 详情弹窗响应式 */
+  .ant-modal {
+    max-width: calc(100vw - 24px);
+    margin: 0 auto;
+  }
+
+  .ant-modal-body .ant-row {
+    flex-direction: column; /* 移动端改为垂直排列 */
+  }
+
+  .ant-modal-body .ant-col {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  .ant-modal-body img {
+    margin-bottom: 16px;
+  }
+}

@@ -1,0 +1,170 @@
+/* 购物车页面响应式优化 */
+.cart-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.cart-item-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
+
+.cart-item-card .ant-card-body {
+  padding: 16px;
+}
+
+.cart-item-layout {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 0; /* 允许文本截断 */
+}
+
+.cart-item-title {
+  margin: 0 !important;
+  font-size: 16px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-item-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* 桌面端结算信息排版 */
+.cart-checkout-total {
+  display: flex; 
+  justify-content: space-between; 
+  margin-bottom: 24px; 
+  align-items: center;
+}
+
+/* 桌面端结算栏布局 (脱离了Col后的新布局) */
+.cart-checkout-wrapper {
+  position: fixed;
+  top: 88px;
+  right: calc(50% - 500px + 24px); /* 动态计算右侧位置，保持与最大宽度1000px的容器对齐 */
+  width: 300px;
+}
+
+.cart-checkout-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  background: #fff;
+}
+
+@media (max-width: 1000px) {
+  .cart-checkout-wrapper {
+    right: 24px;
+  }
+}
+
+/* 移动端结算底栏 */
+@media (max-width: 768px) {
+  .cart-checkout-wrapper {
+    position: static;
+    width: auto;
+  }
+  
+  .cart-container {
+    padding: 12px;
+    /* 取消硬编码的 padding-bottom，改为由 React 动态计算注入 */
+  }
+  
+  .cart-item-layout {
+    align-items: stretch;
+    position: relative;
+  }
+  
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .cart-item-actions {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    flex-direction: row; /* 移动端操作按钮横向排列在右下角 */
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* 移动端把结算栏固定在屏幕底部 */
+  .cart-checkout-card {
+    position: fixed;
+    bottom: 0 !important;
+    left: 0;
+    width: 100%;
+    height: auto !important; /* 强制自适应内容高度，防止被意外撑满屏幕 */
+    min-height: 70px;
+    max-height: 120px; /* 限制最大高度，绝不占满全屏 */
+    z-index: 1000;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    margin: 0;
+    background: #fff;
+    top: auto !important; /* 覆盖桌面端的 top 属性 */
+  }
+  
+  .cart-checkout-card .ant-card-body {
+    padding: 12px 16px;
+    /* 给底部的安全区域留出空间 (针对 iPhone X 等带 Home Indicator 的机型) */
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: row !important; /* 强制水平排列，防止被外层 flex-direction: column 影响 */
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+  }
+  
+  .cart-checkout-title {
+    display: none; /* 移动端隐藏"结算"标题 */
+  }
+  
+  .cart-checkout-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0 !important;
+    flex: 1; /* 让信息区域占据剩余空间 */
+  }
+  
+  .cart-checkout-total {
+    margin-bottom: 0 !important;
+    align-items: baseline !important;
+    justify-content: flex-start !important;
+    gap: 4px;
+  }
+  
+  .cart-checkout-btn {
+    width: 120px !important;
+    border-radius: 20px;
+    margin: 0 !important; /* 消除 block 按钮可能带来的额外 margin */
+  }
+}

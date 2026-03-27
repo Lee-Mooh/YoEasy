@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+/* 修复页面切换时的抖动问题 */
+html {
+  overflow-y: scroll; /* 强制显示垂直滚动条，防止页面因内容高度变化而左右抖动 */
+}
+
+body {
+  background-color: #f6ffed; /* 保持温暖的浅绿色背景 */
+  background-image: radial-gradient(#b7eb8f 1px, transparent 1px); /* 稍微加深波点颜色 (#b7eb8f) */
+  background-size: 20px 20px;
+  margin: 0;
+  font-family: 'Nunito', 'Comic Sans MS', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+/* 顶部的遮挡块，用于隐藏滚动到导航栏上方的页面内容 */
+.top-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background-color: #f6ffed;
+  background-image: radial-gradient(#b7eb8f 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 999;
+}
+
+/* 导航栏样式 */
+.app-header {
+  background: rgba(255, 255, 255, 0.85) !important; /* 更透明的背景，让波点透出来 */
+  backdrop-filter: blur(16px); /* 增加毛玻璃模糊效果 */
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(82, 196, 26, 0.1) !important; /* 更大更柔和的阴影，增加浮动感 */
+  border-bottom: 2px dashed rgba(183, 235, 143, 0.6); /* 卡通风格的虚线边框 */
+  border-radius: 0 0 32px 32px; /* 底部圆角，看起来像一个悬浮的胶囊 */
+  position: fixed;
+  width: calc(100% - 32px); /* 左右留出间距 */
+  top: 16px; /* 顶部留出间距 */
+  left: 16px;
+  z-index: 1000;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+/* 调整布局内容区域的顶部内边距，以适应悬浮的导航栏 */
+.ant-layout {
+  background: transparent !important;
+  padding-top: 24px;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 48px;
+  height: 100%;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.05) rotate(-2deg); /* 悬停时略微放大并带有俏皮的倾斜 */
+}
+
+.nav-menu {
+  flex: 1;
+  border-bottom: none !important;
+  background: transparent !important;
+  line-height: 40px; /* 减小行高，让背景色块变小 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+}
+
+.nav-menu .ant-menu-item {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 8px !important;
+  border-radius: 12px !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  height: 50px !important; /* 固定高度，避免撑满整个导航栏 */
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu .ant-menu-item:hover {
+  background-color: #f6ffed !important;
+  transform: translateY(-2px);
+}
+
+.nav-menu .ant-menu-item-selected {
+  background-color: #f6ffed !important;
+}
+
+.nav-menu .ant-menu-item-selected a {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.nav-menu .ant-menu-item-selected .anticon {
+  color: #52c41a !important; /* Darker green */
+}
+
+.nav-menu .ant-menu-item::after {
+  display: none !important; /* 移除底部线条，改为背景色高亮 */
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center; /* 确保子元素垂直居中 */
+  height: 100%;
+  padding: 0 24px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  height: 100%; /* 确保高度与父元素一致以便于内部元素垂直居中 */
+  gap: 24px; /* 使用 gap 代替 Ant Design Space 的间距，控制更精确 */
+}
+
+.user-dropdown {
+  padding: 4px 16px;
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  height: 44px; /* 稍微加高一点 */
+  background: rgba(246, 255, 237, 0.5); /* 默认带一点点底色 */
+  border: 2px solid transparent;
+  max-width: fit-content; /* 允许根据内容自适应宽度 */
+}
+
+.user-avatar {
+  flex-shrink: 0; /* 防止头像被压缩 */
+}
+
+.user-name {
+  white-space: nowrap; /* 强制不换行 */
+  overflow: hidden; /* 超出部分隐藏 */
+  text-overflow: ellipsis; /* 显示省略号 */
+  max-width: 150px; /* 稍微放宽用户名的最大宽度限制 */
+}
+
+.user-dropdown:hover {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 196, 26, 0.15);
+}
+
+/* 覆盖 Ant Design 默认样式 */
+.ant-layout-header {
+  height: 64px;
+  line-height: 64px;
+}
+
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: transparent;
+}
+
+/* 按钮卡通化 */
+.ant-btn {
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045) !important;
+}
+
+.ant-btn-primary {
+  box-shadow: 0 4px 0 #237804 !important; /* Darker green shadow (Green-8) */
+  transition: all 0.1s;
+}
+
+.ant-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #237804 !important;
+}
+
+/* 自定义 Select 样式 */
+.custom-select {
+  width: 130px; /* 固定宽度 */
+}
+
+.custom-select .ant-select-selector {
+  border-radius: 20px !important;
+  border: 2px solid #b7eb8f !important;
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 0 rgba(183, 235, 143, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  background-color: #fff !important;
+}
+
+.custom-select:hover .ant-select-selector {
+  border-color: #52c41a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(82, 196, 26, 0.15) !important;
+}
+
+.custom-select.ant-select-focused .ant-select-selector {
+  border-color: #52c41a !important;
+  box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.2) !important;
+}
+
+/* Select 下拉菜单样式 */
+.custom-select-dropdown {
+  border-radius: 16px !important;
+  padding: 8px !important;
+  border: 2px solid #b7eb8f;
+  box-shadow: 0 8px 24px rgba(82, 196, 26, 0.15) !important;
+}
+
+.custom-select-dropdown .ant-select-item {
+  border-radius: 12px !important;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+}
+
+.custom-select-dropdown .ant-select-item-option-active {
+  background-color: #f6ffed !important;
+  color: #52c41a !important;
+  font-weight: 600;
+}
+
+.custom-select-dropdown .ant-select-item-option-selected {
+  background-color: #e6f7ff !important;
+  color: #1890ff !important;
+  font-weight: bold;
+}
+
+/* 自定义搜索框样式 */
+.custom-search {
+  width: 250px; /* PC端默认宽度 */
+  flex-grow: 1; /* 允许在换行后占满剩余空间 */
+  min-width: 250px; /* 保证不被压缩得太小 */
+  max-width: 400px; /* 设置最长限度，防止在第二行被拉得过长 */
+}
+
+.custom-search .ant-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.custom-search .ant-input-affix-wrapper {
+  border-radius: 20px 0 0 20px !important;
+  border: 2px solid #b7eb8f !important;
+  border-right: none !important;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.custom-search .ant-input-affix-wrapper:hover,
+.custom-search .ant-input-affix-wrapper-focused {
+  border-color: #52c41a !important;
+  background-color: #fff;
+}
+
+.custom-search .ant-input {
+  font-size: 14px;
+}
+
+.custom-search .ant-btn {
+  border-radius: 0 20px 20px 0 !important;
+  height: 40px !important;
+  border: 2px solid #b7eb8f !important;
+  border-left: none !important;
+  background-color: #f6ffed !important;
+  color: #52c41a !important;
+  width: 50px;
+  transition: all 0.3s ease;
+}
+
+.custom-search .ant-btn:hover {
+  background-color: #52c41a !important;
+  color: #fff !important;
+  border-color: #52c41a !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+  .user-name, .user-dropdown-icon {
+    display: none !important; /* 屏幕较小时直接隐藏用户名和图标，只显示头像 */
+  }
+  
+  .user-dropdown {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  .user-dropdown .user-avatar {
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 导航栏响应式 */
+  .app-header {
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 0 0 16px 16px;
+    padding: 0 8px;
+  }
+  
+  .top-mask {
+    display: none; /* 移动端导航栏贴顶，不需要遮罩 */
+  }
+
+  .logo-wrapper img {
+    height: 60px !important; /* 缩小 Logo */
+  }
+
+  .logo-wrapper {
+    margin-right: 12px;
+  }
+
+  .nav-menu .ant-menu-item {
+    padding: 0 8px !important;
+    margin: 0 4px !important;
+    font-size: 14px;
+  }
+
+  .header-right {
+    gap: 8px; /* 减小图标间距 */
+  }
+
+  .user-dropdown .user-name {
+    display: none; /* 在移动端隐藏用户名，只显示头像 */
+  }
+
+  .user-dropdown .user-dropdown-icon {
+    display: none; /* 同样隐藏下拉箭头 */
+  }
+
+  .user-dropdown {
+    padding: 0; /* 移除内边距，只保留头像 */
+    height: auto;
+    background: transparent; /* 移除背景色 */
+    border: none;
+  }
+
+  .user-dropdown:hover {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    transform: scale(1.05); /* 悬停时稍微放大头像 */
+  }
+
+  .user-dropdown .user-avatar {
+    margin-right: 0 !important;
+  }
+
+  /* 内容区域响应式 */
+  .ant-layout {
+    padding-top: 16px;
+  }
+  
+  .site-layout-content {
+    padding: 12px;
+  }
+  
+  /* 布局内边距响应式 */
+  .ant-layout-content {
+    padding: 0 12px !important;
+    margin-top: 64px !important; /* 减小顶部边距 */
+  }
+
+  .custom-search {
+    width: 100% !important; /* 在移动端或换行时占满整行 */
+    max-width: 400px !important; /* 移动端也保持最长限度 */
+    margin: 0; 
+  }
+}
